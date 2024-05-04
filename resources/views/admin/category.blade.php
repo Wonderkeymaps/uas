@@ -19,6 +19,13 @@
         .input_color{
             color: black;
         }
+        .center{
+          margin: auto;
+          width: 50%;
+          text-align: center;
+          margin-top: 30px;
+          border: 3px solid white;
+        }
     </style>
 
   </head>
@@ -31,13 +38,45 @@
 
       <div class="main-panel">
         <div class="content-wrapper">
+          @if (session()->has('message'))
+          <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+            {{ session()->get('message') }}
+          </div>
+
+
+          @endif
+
             <div class="div_center">
                 <h2 class="h2_font">Add Category</h2>
-                <form>
-                    <input class="input_color" type="text" name="name" placeholder="Input Category">
+
+                <form action="{{ url('add_category') }}" method="POST">
+
+                    @csrf
+                    <input class="input_color" type="text" name="category" placeholder="Input Category">
                     <input type="submit" class="btn btn-primary" name="submit" value="Add Category">
                 </form>
             </div>
+            <table class="center">
+              <tr>
+                <td>Category Name</td>
+                <td>Action</td>
+              </tr>
+
+              @foreach ($data as $data)
+              
+              <tr>
+                <td>{{$data->category_name}}</td>
+                <td>
+                  <a onclick="return confirm('Data yang di pilih akan terhapus')" class="btn btn-danger" href="{{ url('delete_category',$data->id) }}">Delete</a>
+                </td>
+              </tr>
+
+              @endforeach
+              
+
+            </table>
+
         </div>
       </div>
     <!-- container-scroller -->
