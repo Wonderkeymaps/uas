@@ -41,6 +41,16 @@
         <!-- partial -->
        <div class="main-panel">
         <div class="content-wrapper">
+
+            @if (session()->has('message'))
+            <div class="alert alert-success">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+              {{ session()->get('message') }}
+            </div>
+  
+  
+            @endif
+            
             <div class="div_center">
                 <h1 class="font_size">Add Product</h1>
 
@@ -80,7 +90,7 @@
                         <option value="" selected="">Kategori</option>
 
                         @foreach ($category as $category)
-                        <option>{{ $category->category_name }}</option>    
+                        <option value="{{ $category->category_name }}">{{ $category->category_name }}</option>    
                         @endforeach
                         
                     </select>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Product;
 
 class AdminController extends Controller
 {
@@ -43,6 +44,19 @@ class AdminController extends Controller
 
     public function add_product(Request $request)
     {
+        $product=new product;
+        $product->nama=$request->nama;
+        $product->deskripsi=$request->deskripsi;
+        $product->harga=$request->harga;
+        $product->quantity=$request->quantity;
+        $product->diskon_harga=$request->diskon_harga;
+        $product->category=$request->category;
+        $image=$request->image;
+        $imagename=time().'.'.$image->getClientOriginalExtension();
+        $request->image->move('product',$imagename);
+        $product->category=$imagename;
+        $product->save();
+        return redirect()->back()->with('message','Produk Added Successfully');;
 
     }
 
